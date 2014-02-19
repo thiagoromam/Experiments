@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AopWithFody", "AopWithFody\AopWithFody.csproj", "{1872DAF7-E8A6-418F-B049-BF132CE4C7BA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{568EA3B8-FAA1-46DE-AA69-7B8DE26438CB} = {568EA3B8-FAA1-46DE-AA69-7B8DE26438CB}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weavers", "Weavers\Weavers.csproj", "{568EA3B8-FAA1-46DE-AA69-7B8DE26438CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1872DAF7-E8A6-418F-B049-BF132CE4C7BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1872DAF7-E8A6-418F-B049-BF132CE4C7BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1872DAF7-E8A6-418F-B049-BF132CE4C7BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1872DAF7-E8A6-418F-B049-BF132CE4C7BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{568EA3B8-FAA1-46DE-AA69-7B8DE26438CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{568EA3B8-FAA1-46DE-AA69-7B8DE26438CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{568EA3B8-FAA1-46DE-AA69-7B8DE26438CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{568EA3B8-FAA1-46DE-AA69-7B8DE26438CB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
