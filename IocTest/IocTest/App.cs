@@ -1,23 +1,14 @@
 ﻿using Funq;
+using Funq.Fast;
 using IocTest.Core;
 
 namespace IocTest
 {
     public class App : Core.App
     {
-        public static Container Container { get; private set; }
-
-        static App()
+        protected override IRegistration<IDisplayService> RegisterDisplayService()
         {
-            Container = new Container();
-        }
-        public App() : base(Container)
-        {
-        }
-
-        protected override IRegistration<IDisplayService> RegisterDisplayService(Container container)
-        {
-            return container.Register<IDisplayService>(c => new DisplayService());
+            return DependencyInjection.Register<IDisplayService>(c => new DisplayService());
         }
     }
 }

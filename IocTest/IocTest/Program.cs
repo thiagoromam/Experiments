@@ -1,4 +1,5 @@
 ﻿using System;
+using Funq.Fast;
 using IocTest.Core;
 
 namespace IocTest
@@ -10,7 +11,7 @@ namespace IocTest
             var app = new App();
             app.RegisterDependencies();
 
-            var weatherStation = App.Container.Resolve<IWeatherStation>();
+            var weatherStation = DependencyInjection.Resolve<IWeatherStation>();
             weatherStation.Conditions = new[]
             {
                 new WeatherCondition("HOT",  "Yellow"), 
