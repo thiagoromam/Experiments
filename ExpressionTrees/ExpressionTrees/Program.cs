@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using LinqKit;
 
 namespace ExpressionTrees
 {
@@ -49,29 +48,26 @@ namespace ExpressionTrees
             int code;
             var filterByCode = stringCode.Length == 5 && int.TryParse(stringCode, out code);
 
-            Expression<Func<Book, bool>> expression;
+            var predicate = new PredicateBuilder<Book>();
 
             if (filterByNumber)
-                expression = b => b.NumerOfPages > number - 100 && b.NumerOfPages < number + 100;
+                predicate &= b => b.NumerOfPages > number - 100 && b.NumerOfPages < number + 100;
             else
-                expression = b => b.FullTitle.ToLower().Contains(search) || b.Author.ToLower().Contains(search);
+                predicate &= b => b.FullTitle.ToLower().Contains(search) || b.Author.ToLower().Contains(search);
 
             if (filterByCode)
-            {
-                //expression = ManualyCombine(expression, b => b.Code.Replace("-", "") == stringCode);
-                expression = expression.Or(b => b.Code.Replace("-", "") == stringCode);
-            }
+                predicate |= b => b.Code.Replace("-", "") == stringCode;
 
-            Print(books.Where(expression));
+            Print(books.Where(predicate));
         }
 
-        static Expression<Func<Book, bool>> ManualyCombine(Expression<Func<Book, bool>> exp1, Expression<Func<Book, bool>> exp2)
-        {
-            return Expression.Lambda<Func<Book, bool>>(Expression.OrElse(
-                exp1.Body,
-                new ExpressionParameterReplacer(exp2.Parameters, exp1.Parameters).Visit(exp2.Body)
-            ), exp1.Parameters);
-        }
+        //static Expression<Func<Book, bool>> ManualyCombine(Expression<Func<Book, bool>> exp1, Expression<Func<Book, bool>> exp2)
+        //{
+        //    return Expression.Lambda<Func<Book, bool>>(Expression.OrElse(
+        //        exp1.Body,
+        //        new ExpressionParameterReplacer(exp2.Parameters, exp1.Parameters).Visit(exp2.Body)
+        //    ), exp1.Parameters);
+        //}
 
         static void Print(IEnumerable<Book> books)
         {
