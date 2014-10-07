@@ -41,6 +41,10 @@ namespace VsInterop
                 var projectPath = Path.Combine(_solutionFolder, ProjectName + @"\");
                 sln.AddFromTemplate(projectTemplate, projectPath, ProjectName, false);
 
+                var project = sln.Projects.Item(1);
+                var projectNamespace = project.Properties.Cast<Property>().Single(p => p.Name == "RootNamespace");
+                projectNamespace.Value = ProjectName;
+
                 _ide.ExecuteCommand("File.SaveAll");
 
                 MessageBox.Show("Solution Created");
