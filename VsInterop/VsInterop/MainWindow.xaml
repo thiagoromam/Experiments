@@ -1,0 +1,24 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="VsInterop.MainWindow"
+        Title="MainWindow" Height="230.264" Width="396.053">
+    <Grid>
+        <StackPanel>
+            <Button Margin="10 10 10 0" Padding="10" Content="Create Solution" Click="OnCreateSolutionClick" />
+            <Button Margin="10 10 10 0" Padding="10" Content="Show Solution Info" Click="OnShowSolutionInfoClick" />
+            <Grid Margin="10 10 10 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Class Name" />
+                    <TextBox Name="ClassName" Margin="0 3 5 0" Padding="10" />
+                </StackPanel>
+                <Button Grid.Column="1" Margin="5 19 0 0" Content="Add Class" Click="OnAddClassClick" />
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>
