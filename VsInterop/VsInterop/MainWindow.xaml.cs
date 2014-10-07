@@ -16,7 +16,7 @@ namespace VsInterop
     {
         private readonly string _solutionFolder;
         private const string SolutionName = "GeneratedSolution";
-        private const string ProjectName = "SharedContent";
+        private const string SharedProjectName = "SharedContent";
         private DTE _ide;
 
         public MainWindow()
@@ -37,14 +37,19 @@ namespace VsInterop
 
                 sln.Create(_solutionFolder, SolutionName);
 
-                var projectTemplate = sln.GetProjectTemplate(@"Store Apps\Universal Apps\1033\SharedEmptyMaster\SharedEmptyMaster.vstemplate", "CSharp");
-                var projectPath = Path.Combine(_solutionFolder, ProjectName + @"\");
-                sln.AddFromTemplate(projectTemplate, projectPath, ProjectName, false);
+                var sharedProjectTemplate = sln.GetProjectTemplate(@"Store Apps\Universal Apps\1033\SharedEmptyMaster\SharedEmptyMaster.vstemplate", "CSharp");
+                var sharedProjectPath = Path.Combine(_solutionFolder, SharedProjectName + @"\");
+                sln.AddFromTemplate(sharedProjectTemplate, sharedProjectPath, SharedProjectName, false);
 
-                var project = sln.Projects.Item(1);
-                var projectNamespace = project.Properties.Cast<Property>().Single(p => p.Name == "RootNamespace");
-                projectNamespace.Value = ProjectName;
+                var sharedProject = sln.Projects.Item(1);
+                var sharedProjectNamespace = sharedProject.Properties.Cast<Property>().Single(p => p.Name == "RootNamespace");
+                sharedProjectNamespace.Value = SharedProjectName;
 
+                var monogameProjectTemplate = sln.GetProjectTemplate(@"MonoGame\Windows.zip", "CSharp");
+                const string monogameProjectName = "MonogameProject";
+                var monogameProjectPath = Path.Combine(_solutionFolder, monogameProjectName + @"\");
+                sln.AddFromTemplate(monogameProjectTemplate, monogameProjectPath, monogameProjectName, false);
+                
                 _ide.ExecuteCommand("File.SaveAll");
 
                 MessageBox.Show("Solution Created");
@@ -81,7 +86,7 @@ namespace VsInterop
 
                 var className = ClassName.Text + ".cs";
                 var classTemplate = sln.GetProjectItemTemplate("Class.zip", "CSharp");
-                var sharedProject = sln.Projects.Cast<Project>().Single(f => f.Name == ProjectName);
+                var sharedProject = sln.Projects.Cast<Project>().Single(f => f.Name == SharedProjectName);
                 sharedProject.ProjectItems.AddFromTemplate(classTemplate, className);
 
                 _ide.ExecuteCommand("File.SaveAll");
