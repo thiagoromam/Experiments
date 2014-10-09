@@ -6,18 +6,18 @@ using System.Windows;
 using EnvDTE;
 using EnvDTE100;
 
-// http://www.viva64.com/en/b/0169/
-// http://msdn.microsoft.com/en-us/library/y849h0w1.aspx
-// http://msdn.microsoft.com/en-us/library/1xt0ezx9.aspx
-
 namespace VsInterop
 {
+    // http://www.viva64.com/en/b/0169/
+    // http://msdn.microsoft.com/en-us/library/xc52cke4.aspx
+
     public partial class MainWindow
     {
         private readonly string _solutionFolder;
         private const string SolutionName = "GeneratedSolution";
         private const string SharedProjectName = "SharedContent";
         private DTE _ide;
+        private DTEEvents _ideEvents;
 
         public MainWindow()
         {
@@ -49,7 +49,7 @@ namespace VsInterop
                 const string monogameProjectName = "MonogameProject";
                 var monogameProjectPath = Path.Combine(_solutionFolder, monogameProjectName + @"\");
                 sln.AddFromTemplate(monogameProjectTemplate, monogameProjectPath, monogameProjectName, false);
-                
+
                 _ide.ExecuteCommand("File.SaveAll");
 
                 MessageBox.Show("Solution Created");
@@ -94,6 +94,10 @@ namespace VsInterop
                 MessageBox.Show(className + " added!");
             }
         }
+        void OnShowVisualStudioClick(object sender, RoutedEventArgs e)
+        {
+            _ide.UserControl = true;
+        }
 
         Solution4 GetSolution()
         {
@@ -106,6 +110,9 @@ namespace VsInterop
         {
             var type = Type.GetTypeFromProgID("VisualStudio.DTE.12.0", true);
             _ide = (DTE)Activator.CreateInstance(type, true);
+
+            _ideEvents = _ide.Events.DTEEvents;
+            _ideEvents.OnBeginShutdown += InitializeVisualStudio;
         }
         void CloseVisualStudio()
         {
