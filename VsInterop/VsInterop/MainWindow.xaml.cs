@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using EnvDTE;
@@ -131,30 +132,61 @@ namespace VsInterop
                 using (new MessageFilter())
                 {
                     var sln = GetSolution();
-
                     var sharedProject = sln.Projects.Item(1);
+
+                    #region Add Class via CodeModel
                     
-                    // Add Class via CodeModel
-                    var csItemTemplatePath = sln.GetProjectItemTemplate("CodeFile", "CSharp");
-                    sharedProject.ProjectItems.AddFromTemplate(csItemTemplatePath, "GameObject.cs");
+                    //var csItemTemplatePath = sln.GetProjectItemTemplate("CodeFile", "CSharp");
+                    //sharedProject.ProjectItems.AddFromTemplate(csItemTemplatePath, "GameObject.cs");
 
                     // Generate Class content
-                    var testClass = sharedProject.ProjectItems.Item("GameObject.cs");
-                    var similarProjectItems = SolutionHelper.GetSimilarProjectItems((Solution)sln, testClass);
-                    var fileCodeModel = (FileCodeModel2)similarProjectItems.Select(x => x.FileCodeModel).First(y => y != null);
+                    //var testClass = sharedProject.ProjectItems.Item("GameObject.cs");
+                    //var similarProjectItems = SolutionHelper.GetSimilarProjectItems((Solution)sln, testClass);
+                    //var fileCodeModel = (FileCodeModel2)similarProjectItems.Select(x => x.FileCodeModel).First(y => y != null);
 
-                    fileCodeModel.AddImport("Microsoft.Xna.Framework");
+                    //fileCodeModel.AddImport("Microsoft.Xna.Framework");
+
+                    //var @namespace = fileCodeModel.AddNamespace(SharedProjectName);
+                    //var @class = (CodeClass2)@namespace.AddClass("GameObject");
+
+                    //var function = (CodeFunction2)@class.AddFunction("Update", vsCMFunction.vsCMFunctionFunction, "void", Access: vsCMAccess.vsCMAccessPublic);
+                    //function.AddParameter("gameTime", "GameTime");
+
+                    //// https://social.msdn.microsoft.com/Forums/vstudio/pt-BR/faad34d5-e046-494c-81c3-7b34483c3a7f/adding-autoimplemented-property-using-codeclass2?forum=vsx
+                    ////var property = (CodeProperty2)@class.AddProperty("Position", "Position", "Vector2", -1, vsCMAccess.vsCMAccessPublic, null);
+
+                    //testClass.Save();
+
+                    #endregion
+
+                    #region Add class via text editing
+
+                    var builder = new StringBuilder();
+                    builder.AppendLine("using Microsoft.Xna.Framework;");
+                    builder.AppendLine();
+                    builder.AppendLine("// ReSharper disable once CheckNamespace");
+                    builder.AppendLine("namespace " + SharedProjectName);
+                    builder.AppendLine("{");
+                    builder.AppendLine("    public class GameObject");
+                    builder.AppendLine("    {");
+                    builder.AppendLine("        public Vector2 Location { get; set; }");
+                    builder.AppendLine("        ");
+                    builder.AppendLine("        public void Update(GameTime gameTime)");
+                    builder.AppendLine("        {");
+                    builder.AppendLine("        }");
+                    builder.AppendLine("    }");
+                    builder.Append("}");
+
+                    var csItemTemplatePath = sln.GetProjectItemTemplate("CodeFile", "CSharp");
+                    sharedProject.ProjectItems.AddFromTemplate(csItemTemplatePath, "GameObject.cs");
                     
-                    var @namespace = fileCodeModel.AddNamespace(SharedProjectName);
-                    var @class = (CodeClass2)@namespace.AddClass("GameObject");
+                    var document = (TextDocument)_ide.ActiveDocument.Object("TextDocument");
+                    var edit = (EditPoint2)document.StartPoint.CreateEditPoint();
+                    edit.Insert(builder.ToString());
 
-                    var function = (CodeFunction2)@class.AddFunction("Update", vsCMFunction.vsCMFunctionFunction, "void", Access: vsCMAccess.vsCMAccessPublic);
-                    function.AddParameter("gameTime", "GameTime");
+                    _ide.ExecuteCommand("File.SaveAll");
 
-                    // https://social.msdn.microsoft.com/Forums/vstudio/pt-BR/faad34d5-e046-494c-81c3-7b34483c3a7f/adding-autoimplemented-property-using-codeclass2?forum=vsx
-                    //var property = (CodeProperty2)@class.AddProperty("Position", "Position", "Vector2", -1, vsCMAccess.vsCMAccessPublic, null);
-
-                    testClass.Save();
+                    #endregion
                 }
             });
         }
