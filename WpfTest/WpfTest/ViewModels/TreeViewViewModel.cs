@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
 using WpfTest.Annotations;
 
 namespace WpfTest.ViewModels
@@ -9,12 +8,7 @@ namespace WpfTest.ViewModels
     public class TreeViewViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        private string _selected;
-
-        public TreeViewViewModel()
-        {
-            SelectCommand = new DelegateCommand(Select);
-        }
+        private object _selected;
 
         public List<object> Favorites
         {
@@ -44,23 +38,18 @@ namespace WpfTest.ViewModels
                 };
             }
         }
-        public string Selected
+        public object Selected
         {
             get { return _selected; }
-            private set
+            set
             {
-                if (value == _selected) return;
+                value = value as string;
+                if (value == null || value == _selected) return;
                 _selected = value;
                 OnPropertyChanged();
             }
         }
-        public ICommand SelectCommand { get; private set; }
-
-        private void Select(object item)
-        {
-            Selected = "Selected: " + item;
-        }
-
+        
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
