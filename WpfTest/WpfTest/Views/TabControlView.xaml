@@ -17,6 +17,16 @@
                     <Setter Property="Header" Value="{Binding Name}"/>
                     <Setter Property="Content" Value="{Binding Content}"/>
                     <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
+                    <Setter Property="Tag" Value="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" />
+                    <Setter Property="ContextMenu">
+                        <Setter.Value>
+                            <ContextMenu>
+                                <MenuItem Header="Close"
+                                          Command="{Binding PlacementTarget.Tag.CloseTabCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}"
+                                          CommandParameter="{Binding}" />
+                            </ContextMenu>
+                        </Setter.Value>
+                    </Setter>
                 </Style>
             </TabControl.ItemContainerStyle>
         </TabControl>

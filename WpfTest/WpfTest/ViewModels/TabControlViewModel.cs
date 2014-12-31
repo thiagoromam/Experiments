@@ -14,10 +14,12 @@ namespace WpfTest.ViewModels
         {
             Tabs = new ObservableCollection<TabPage>();
             AddTabCommand = new DelegateCommand(o => AddTab());
+            CloseTabCommand = new DelegateCommand(o => CloseTab((TabPage)o));
         }
 
         public ObservableCollection<TabPage> Tabs { get; private set; }
         public ICommand AddTabCommand { get; private set; }
+        public ICommand CloseTabCommand { get; private set; }
 
         private void AddTab()
         {
@@ -37,6 +39,10 @@ namespace WpfTest.ViewModels
                 },
                 IsSelected = true
             });
+        }
+        private void CloseTab(TabPage tab)
+        {
+            Tabs.Remove(tab);
         }
     }
 
