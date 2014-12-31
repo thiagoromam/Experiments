@@ -19,7 +19,7 @@
         </StackPanel>
         
         <StackPanel Grid.Column="1">
-            
+            <Button Content="Tab Control" Command="{Binding OpenViewCommand}" CommandParameter="TabControlView" />
         </StackPanel>
     </Grid>
 </Window>

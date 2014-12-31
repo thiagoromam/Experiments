@@ -57,7 +57,11 @@
     <Compile Include="Behaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\TabControlViewModel.cs" />
     <Compile Include="ViewModels\TreeViewViewModel.cs" />
+    <Compile Include="Views\TabControlView.xaml.cs">
+      <DependentUpon>TabControlView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TreeViewView.xaml.cs">
       <DependentUpon>TreeViewView.xaml</DependentUpon>
     </Compile>
@@ -74,6 +78,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\TabControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TreeViewView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
