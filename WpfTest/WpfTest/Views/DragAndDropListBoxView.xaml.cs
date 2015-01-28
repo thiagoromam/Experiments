@@ -1,8 +1,8 @@
 ﻿namespace WpfTest.Views
 {
-    public partial class TabControlView
+    public partial class DragAndDropListBoxView
     {
-        public TabControlView()
+        public DragAndDropListBoxView()
         {
             InitializeComponent();
         }

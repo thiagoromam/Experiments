@@ -55,12 +55,18 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviors\BindableSelectedItemBehavior.cs" />
+    <Compile Include="Behaviors\DragAndDropListBoxBehavior.cs" />
+    <Compile Include="Helpers\UIHelpers.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ViewModels\DragAndDropListBoxViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\TabControlViewModel.cs" />
     <Compile Include="ViewModels\TreeViewViewModel.cs" />
     <Compile Include="Views\TabControlView.xaml.cs">
       <DependentUpon>TabControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DragAndDropListBoxView.xaml.cs">
+      <DependentUpon>DragAndDropListBoxView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TreeViewView.xaml.cs">
       <DependentUpon>TreeViewView.xaml</DependentUpon>
@@ -81,6 +87,10 @@
     <Page Include="Views\TabControlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DragAndDropListBoxView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\TreeViewView.xaml">
       <SubType>Designer</SubType>
@@ -114,7 +124,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\DragInsert.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

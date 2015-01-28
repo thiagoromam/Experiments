@@ -16,6 +16,7 @@
         
         <StackPanel Grid.Column="0">
             <Button Content="Tree View" Command="{Binding OpenViewCommand}" CommandParameter="TreeViewView" />
+            <Button Content="Drag and Drop List Box" Command="{Binding OpenViewCommand}" CommandParameter="DragAndDropListBoxView" />
         </StackPanel>
         
         <StackPanel Grid.Column="1">

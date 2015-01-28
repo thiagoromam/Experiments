@@ -1,0 +1,25 @@
+﻿<Window x:Class="WpfTest.Views.DragAndDropListBoxView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:viewModels="clr-namespace:WpfTest.ViewModels"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:behaviors="clr-namespace:WpfTest.Behaviors"
+        Title="Tree View Test" Height="300" Width="300">
+
+    <Window.DataContext>
+        <viewModels:DragAndDropListBoxViewModel />
+    </Window.DataContext>
+
+    <StackPanel>
+        <ListBox ItemsSource="{Binding Games}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <i:Interaction.Behaviors>
+                <behaviors:DragAndDropListBoxBehavior />
+            </i:Interaction.Behaviors>
+        </ListBox>
+    </StackPanel>
+</Window>
