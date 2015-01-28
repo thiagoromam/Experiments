@@ -142,9 +142,9 @@ namespace WpfTest.Behaviors
             _popup.PlacementRectangle = new Rect(e.GetPosition(AssociatedObject), popupSize);
 
             var position = e.GetPosition(AssociatedObject);
-            var row = UiHelpers.TryFindFromPoint<DataGridRow>(AssociatedObject, position);
+            var row = UiHelpers.TryFindFromPoint<ListBox>(AssociatedObject, position);
             if (row != null)
-                AssociatedObject.SelectedItem = row.Item;
+                AssociatedObject.SelectedItem = row.DataContext;
         }
         private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
