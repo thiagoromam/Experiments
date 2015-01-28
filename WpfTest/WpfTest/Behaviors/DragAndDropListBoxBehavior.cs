@@ -15,10 +15,12 @@ namespace WpfTest.Behaviors
     // http://www.hardcodet.net/2009/03/moving-data-grid-rows-using-drag-and-drop
     public class DragAndDropListBoxBehavior : Behavior<ListBox>
     {
-        public static readonly DependencyProperty DraggedItemProperty;
+        private static readonly DependencyProperty DraggedItemProperty;
+        public static readonly DependencyProperty PathProperty;
         private readonly Popup _popup;
-        private Panel _panel;
+        private Panel _rootPanel;
         private bool _isDragging;
+        private readonly TextBlock _descriptionTextBlock;
 
         static DragAndDropListBoxBehavior()
         {
@@ -27,10 +29,17 @@ namespace WpfTest.Behaviors
                 typeof(object),
                 typeof(DragAndDropListBoxBehavior)
             );
+
+            PathProperty = DependencyProperty.Register(
+                "Path",
+                typeof(string),
+                typeof(DragAndDropListBoxBehavior),
+                new PropertyMetadata(default(string), (s, e) => ((DragAndDropListBoxBehavior)s).SetDescriptionBinding())
+            );
         }
         public DragAndDropListBoxBehavior()
         {
-            var textBlock = new TextBlock
+            _descriptionTextBlock = new TextBlock
             {
                 FontSize = 14,
                 FontWeight = FontWeights.Bold,
@@ -61,20 +70,34 @@ namespace WpfTest.Behaviors
                                 Width = 16,
                                 Height = 16
                             },
-                            textBlock
+                            _descriptionTextBlock
                         }
                     }
                 }
             };
 
             _popup.SetBinding(Popup.PlacementTargetProperty, new Binding { Source = this });
-            textBlock.SetBinding(TextBlock.TextProperty, new Binding("DraggedItem") { Source = this });
+            SetDescriptionBinding();
         }
-        
+
         public object DraggedItem
         {
             get { return GetValue(DraggedItemProperty); }
-            set { SetValue(DraggedItemProperty, value); }
+            private set { SetValue(DraggedItemProperty, value); }
+        }
+        public string Path
+        {
+            get { return (string)GetValue(PathProperty); }
+            set { SetValue(PathProperty, value); }
+        }
+
+        private void SetDescriptionBinding()
+        {
+            var path = "DraggedItem";
+            if (Path != null)
+                path += "." + Path;
+
+            _descriptionTextBlock.SetBinding(TextBlock.TextProperty, new Binding(path) { Source = this });
         }
 
         protected override void OnAttached()
@@ -82,8 +105,8 @@ namespace WpfTest.Behaviors
             base.OnAttached();
 
             // ReSharper disable once PossibleNullReferenceException
-            _panel = (Panel)Window.GetWindow(AssociatedObject).Content;
-            _panel.Children.Add(_popup);
+            _rootPanel = (Panel)Window.GetWindow(AssociatedObject).Content;
+            _rootPanel.Children.Add(_popup);
 
             AssociatedObject.PreviewMouseLeftButtonDown += OnMouseLeftButtonDown;
             AssociatedObject.MouseMove += OnMouseMove;
@@ -92,8 +115,8 @@ namespace WpfTest.Behaviors
         protected override void OnDetaching()
         {
             base.OnDetaching();
-            
-            _panel.Children.Remove(_popup);
+
+            _rootPanel.Children.Remove(_popup);
 
             AssociatedObject.PreviewMouseLeftButtonDown -= OnMouseLeftButtonDown;
             AssociatedObject.MouseMove -= OnMouseMove;

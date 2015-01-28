@@ -14,11 +14,11 @@
         <ListBox ItemsSource="{Binding Games}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding}" />
+                    <TextBlock Text="{Binding Name}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
             <i:Interaction.Behaviors>
-                <behaviors:DragAndDropListBoxBehavior />
+                <behaviors:DragAndDropListBoxBehavior Path="Name" />
             </i:Interaction.Behaviors>
         </ListBox>
     </StackPanel>

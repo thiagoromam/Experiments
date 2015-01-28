@@ -6,22 +6,32 @@ namespace WpfTest.ViewModels
     {
         public DragAndDropListBoxViewModel()
         {
-            Games = new ObservableCollection<string>
+            Games = new ObservableCollection<Game>
             {
-                "Sonic 3",
-                "Sonic & Knuckles",
-                "Monster World IV",
-                "Lunar: The Silver Star",
-                "Lunar: Eternal Blue",
-                "Popful Mail",
-                "Pier Solar",
-                "Crusader of Centy",
-                "Beyond Oasis",
-                "Battletoads",
-                "Ahh! Real Monsters",
+                new Game("Sonic 3"),
+                new Game("Sonic & Knuckles"),
+                new Game("Monster World IV"),
+                new Game("Lunar: The Silver Star"),
+                new Game("Lunar: Eternal Blue"),
+                new Game("Popful Mail"),
+                new Game("Pier Solar"),
+                new Game("Crusader of Centy"),
+                new Game("Beyond Oasis"),
+                new Game("Battletoads"),
+                new Game("Ahh! Real Monsters")
             };
         }
 
-        public ObservableCollection<string> Games { get; private set; }
+        public ObservableCollection<Game> Games { get; private set; }
+    }
+
+    public class Game
+    {
+        public Game(string name)
+        {
+            Name = name;
+        }
+
+        public string Name { get; private set; }
     }
 }
