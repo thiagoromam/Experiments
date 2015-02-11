@@ -21,6 +21,7 @@
         
         <StackPanel Grid.Column="1">
             <Button Content="Tab Control" Command="{Binding OpenViewCommand}" CommandParameter="TabControlView" />
+            <Button Content="Camera" Command="{Binding OpenViewCommand}" CommandParameter="CameraView" />
         </StackPanel>
     </Grid>
 </Window>

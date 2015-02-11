@@ -1,0 +1,40 @@
+﻿<Window x:Class="WpfTest.Views.CameraView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:viewModels="clr-namespace:WpfTest.ViewModels"
+        Title="Tree View Test" Width="500" Height="500">
+
+    <Window.DataContext>
+        <viewModels:CameraViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button Content="1280 x 720" Command="{Binding SetImageWidthCommand}" CommandParameter="1280" />
+            <Button Content="1920 x 1080" Command="{Binding SetImageWidthCommand}" CommandParameter="1920"  />
+        </StackPanel>
+        
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Canvas Grid.Row="0" Grid.Column="0">
+                <Image Source="/Images/kyogre.png" Width="{Binding ImageWidth}" />
+            </Canvas>
+            <ScrollBar Grid.Row="0" Grid.Column="1" />
+            <ScrollBar Orientation="Horizontal" Grid.Row="1" Grid.Column="0" />
+        </Grid>
+
+    </Grid>
+</Window>

@@ -56,8 +56,10 @@
     </ApplicationDefinition>
     <Compile Include="Behaviors\BindableSelectedItemBehavior.cs" />
     <Compile Include="Behaviors\DragAndDropListBoxBehavior.cs" />
+    <Compile Include="Components\NotificationObject.cs" />
     <Compile Include="Helpers\UIHelpers.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ViewModels\CameraViewModel.cs" />
     <Compile Include="ViewModels\DragAndDropListBoxViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\TabControlViewModel.cs" />
@@ -67,6 +69,9 @@
     </Compile>
     <Compile Include="Views\DragAndDropListBoxView.xaml.cs">
       <DependentUpon>DragAndDropListBoxView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CameraView.xaml.cs">
+      <DependentUpon>CameraView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TreeViewView.xaml.cs">
       <DependentUpon>TreeViewView.xaml</DependentUpon>
@@ -89,6 +94,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DragAndDropListBoxView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CameraView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -126,6 +135,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\DragInsert.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\kyogre.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
